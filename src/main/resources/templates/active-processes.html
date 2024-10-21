@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Active Processes</title>
+</head>
+<body>
+<h1>List of Active Processes</h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Process Instance ID</th>
+    <th>Process Definition ID</th>
+    <th>Business Key</th>
+    <th>Start Time</th>
+    <th>Suspended</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="processInstance : ${activeProcesses}">
+    <td th:text="${processInstance.id}">Process Instance ID</td>
+    <td th:text="${processInstance.processDefinitionId}">Process Definition ID</td>
+    <td th:text="${processInstance.businessKey}">Business Key</td>
+    <td th:text="${processInstance.startTime}">Start Time</td>
+    <td th:text="${processInstance.suspended}">Suspended</td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

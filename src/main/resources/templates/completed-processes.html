@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Completed Processes</title>
+</head>
+<body>
+<h1>List of Completed Processes</h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Process Instance ID</th>
+    <th>Process Definition ID</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="process : ${completedProcesses}">
+    <td th:text="${process.id}">Process Instance ID</td>
+    <td th:text="${process.processDefinitionId}">Process Definition ID</td>
+    <td th:text="${process.startTime}">Start Time</td>
+    <td th:text="${process.endTime}">End Time</td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

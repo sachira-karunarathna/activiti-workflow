@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Tasks by Process Instance</title>
+</head>
+<body>
+<h1>Tasks for Process Instance: <span th:text="${processInstanceId}">Process Instance ID</span></h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Task ID</th>
+    <th>Task Name</th>
+    <th>Assignee</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="task : ${tasksByProcess}">
+    <td th:text="${task.id}">Task ID</td>
+    <td th:text="${task.name}">Task Name</td>
+    <td th:text="${task.assignee}">Assignee</td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

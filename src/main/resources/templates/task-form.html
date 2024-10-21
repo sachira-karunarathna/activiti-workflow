@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Task Form</title>
+</head>
+<body>
+<h1>Complete Task: <span th:text="${task.name}"></span></h1>
+
+<form th:action="@{'/task/complete/' + ${task.id}}" method="post">
+  <div>
+    <label for="comment">Comment:</label>
+    <input type="text" id="comment" name="comment" required/>
+  </div>
+  <!-- Add more fields as required -->
+  <button type="submit">Submit</button>
+</form>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

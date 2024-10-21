@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Deployed Processes</title>
+</head>
+<body>
+  <h1>List of Deployed Processes</h1>
+
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Process ID</th>
+        <th>Process Name</th>
+        <th>Version</th>
+        <th>Key</th>
+        <th>Deployment ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="processDefinition : ${processDefinitions}">
+        <td th:text="${processDefinition.id}">Process ID</td>
+        <td th:text="${processDefinition.name}">Process Name</td>
+        <td th:text="${processDefinition.version}">Version</td>
+        <td th:text="${processDefinition.key}">Process Key</td>
+        <td th:text="${processDefinition.deploymentId}">Deployment ID</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <a href="/">Back to Home</a>
+</body>
+</html>

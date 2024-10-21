@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Completed Tasks</title>
+</head>
+<body>
+<h1>List of Completed Tasks</h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Task ID</th>
+    <th>Task Name</th>
+    <th>Assignee</th>
+    <th>Process Instance ID</th>
+    <th>Completion Time</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="task : ${completedTasks}">
+    <td th:text="${task.id}">Task ID</td>
+    <td th:text="${task.name}">Task Name</td>
+    <td th:text="${task.assignee}">Assignee</td>
+    <td th:text="${task.processInstanceId}">Process Instance ID</td>
+    <td th:text="${task.endTime}">Completion Time</td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

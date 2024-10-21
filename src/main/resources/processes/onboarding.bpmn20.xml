@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn2:definitions xmlns:activiti="http://activiti.org/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="model-d75ea43e-ea8e-44ab-b162-101b3972c319" name="onboarding" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <bpmn2:process id="Process_n3fKSR1ZA" name="onboarding" isExecutable="true">
+    <bpmn2:documentation>New hire onboarding process workflow</bpmn2:documentation>
+    <bpmn2:startEvent id="Event_1">
+      <bpmn2:outgoing>SequenceFlow_0ceuf3z</bpmn2:outgoing>
+    </bpmn2:startEvent>
+    <bpmn2:userTask id="ServiceTask_0gojpxz" name="employee_document_submission" activiti:formKey="new_hire_document_submission_form" activiti:candidateGroups="new_hires" activiti:dueDate="2024-10-24T23:55:00" activiti:priority="3">
+      <bpmn2:documentation>The new hire is required to submit personal documents such as ID, Police Report, Certificates, etc.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_0ceuf3z</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_07q21jd</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_0dqtocc</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_0ceuf3z" sourceRef="Event_1" targetRef="ServiceTask_0gojpxz" />
+    <bpmn2:serviceTask id="ServiceTask_1mx9ux1" name="validate_documents" implementation="validateUploadedDocuments">
+      <bpmn2:documentation>After submission, the system checks if all required documents are uploaded.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_0dqtocc</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_173ij7q</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_0dqtocc" sourceRef="ServiceTask_0gojpxz" targetRef="ServiceTask_1mx9ux1" />
+    <bpmn2:sequenceFlow id="SequenceFlow_173ij7q" sourceRef="ServiceTask_1mx9ux1" targetRef="ExclusiveGateway_0xe0igt" />
+    <bpmn2:sequenceFlow id="SequenceFlow_07q21jd" sourceRef="ExclusiveGateway_0xe0igt" targetRef="ServiceTask_0gojpxz" />
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_0xe0igt" name="is_documents_valid" default="SequenceFlow_07q21jd">
+      <bpmn2:documentation>If the uploaded documents are valid then move forward.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_173ij7q</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_07q21jd</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_1kxyyek</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:userTask id="Task_0lamaqe" name="account_setup" activiti:formKey="account_setup_form" activiti:assignee="it_department" activiti:dueDate="2024-10-31T11:55:00" activiti:priority="2">
+      <bpmn2:documentation>The IT department sets up email, system accounts, and access to necessary software tools.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_1kxyyek</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_13wjuua</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_1ld9rqv</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:userTask id="UserTask_1v58slf" name="welcome_kit_preparation" activiti:formKey="welcome_kit_preparation_form" activiti:assignee="admin_department" activiti:dueDate="2024-11-07T11:55:00" activiti:priority="2">
+      <bpmn2:documentation>The admin team prepares a welcome kit (e.g., laptop, office supplies).</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_13wjuua</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_0xw32me</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_1kxyyek" sourceRef="ExclusiveGateway_0xe0igt" targetRef="Task_0lamaqe" />
+    <bpmn2:sequenceFlow id="SequenceFlow_13wjuua" sourceRef="Task_0lamaqe" targetRef="UserTask_1v58slf" />
+    <bpmn2:sequenceFlow id="SequenceFlow_1ld9rqv" sourceRef="Task_0lamaqe" targetRef="Task_137lcx0" />
+    <bpmn2:serviceTask id="Task_137lcx0" name="notify_new_hire" implementation="notifyAccountSetupNewHire">
+      <bpmn2:documentation>Once completed the account setup, the employee is automatically notified that their accounts are set up.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_1ld9rqv</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_12qrqar</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:endEvent id="EndEvent_0r8sy9o">
+      <bpmn2:incoming>SequenceFlow_12qrqar</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_12qrqar" sourceRef="Task_137lcx0" targetRef="EndEvent_0r8sy9o" />
+    <bpmn2:sequenceFlow id="SequenceFlow_0xw32me" sourceRef="UserTask_1v58slf" targetRef="Task_0wr209c" />
+    <bpmn2:userTask id="Task_0wr209c" name="meet_manager" activiti:formKey="meet_manager_form" activiti:candidateUsers="new_hire,manager" activiti:dueDate="2024-11-07T11:55:00" activiti:priority="2">
+      <bpmn2:documentation>The new employee has to schedule a meeting with their manager.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_0xw32me</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_18jcpw9</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:sequenceFlow id="SequenceFlow_18jcpw9" sourceRef="Task_0wr209c" targetRef="Task_1ajlgxd" />
+    <bpmn2:userTask id="Task_1ajlgxd" name="hr_orientation" activiti:formKey="hr_orientation_form" activiti:assignee="new_hire" activiti:dueDate="2024-11-14T11:55:00" activiti:priority="2">
+      <bpmn2:documentation>he new hire needs to complete an orientation with HR regarding company policies, benefits, and onboarding forms.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_18jcpw9</bpmn2:incoming>
+      <bpmn2:incoming>SequenceFlow_0wri2n5</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_0yylqs3</bpmn2:outgoing>
+    </bpmn2:userTask>
+    <bpmn2:exclusiveGateway id="ExclusiveGateway_1c4ucmv" name="is_hr_orientation_complete">
+      <bpmn2:incoming>SequenceFlow_0yylqs3</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_0uk0mmq</bpmn2:outgoing>
+      <bpmn2:outgoing>SequenceFlow_13hybeq</bpmn2:outgoing>
+    </bpmn2:exclusiveGateway>
+    <bpmn2:sequenceFlow id="SequenceFlow_0yylqs3" sourceRef="Task_1ajlgxd" targetRef="ExclusiveGateway_1c4ucmv" />
+    <bpmn2:sequenceFlow id="SequenceFlow_0uk0mmq" sourceRef="ExclusiveGateway_1c4ucmv" targetRef="Task_1sekqdc" />
+    <bpmn2:sequenceFlow id="SequenceFlow_13hybeq" sourceRef="ExclusiveGateway_1c4ucmv" targetRef="Task_0lrifl4" />
+    <bpmn2:sequenceFlow id="SequenceFlow_0wri2n5" sourceRef="Task_0lrifl4" targetRef="Task_1ajlgxd" />
+    <bpmn2:serviceTask id="Task_1sekqdc" name="welcome_message" implementation="sendWelcomeMessage">
+      <bpmn2:documentation>After all previous tasks are completed, the system sends a final welcome email to the new employee and marks the process as complete.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_0uk0mmq</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_1uvlhaq</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+    <bpmn2:endEvent id="EndEvent_0jg0gdn">
+      <bpmn2:incoming>SequenceFlow_1uvlhaq</bpmn2:incoming>
+    </bpmn2:endEvent>
+    <bpmn2:sequenceFlow id="SequenceFlow_1uvlhaq" sourceRef="Task_1sekqdc" targetRef="EndEvent_0jg0gdn" />
+    <bpmn2:serviceTask id="Task_0lrifl4" name="notify_new_hire" implementation="notifyNewHireToCompleteOrientation">
+      <bpmn2:documentation>Send notification to new hire that mentioning to complete hr orientation.</bpmn2:documentation>
+      <bpmn2:incoming>SequenceFlow_13hybeq</bpmn2:incoming>
+      <bpmn2:outgoing>SequenceFlow_0wri2n5</bpmn2:outgoing>
+    </bpmn2:serviceTask>
+  </bpmn2:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_n3fKSR1ZA">
+      <bpmndi:BPMNShape id="_BPMNShape_Event_2" bpmnElement="Event_1">
+        <dc:Bounds x="242" y="262" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0bc1d0w_di" bpmnElement="ServiceTask_0gojpxz">
+        <dc:Bounds x="350" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ceuf3z_di" bpmnElement="SequenceFlow_0ceuf3z">
+        <di:waypoint x="278" y="280" />
+        <di:waypoint x="350" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1mx9ux1_di" bpmnElement="ServiceTask_1mx9ux1">
+        <dc:Bounds x="540" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0dqtocc_di" bpmnElement="SequenceFlow_0dqtocc">
+        <di:waypoint x="450" y="280" />
+        <di:waypoint x="540" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_173ij7q_di" bpmnElement="SequenceFlow_173ij7q">
+        <di:waypoint x="640" y="280" />
+        <di:waypoint x="735" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_07q21jd_di" bpmnElement="SequenceFlow_07q21jd">
+        <di:waypoint x="760" y="255" />
+        <di:waypoint x="760" y="140" />
+        <di:waypoint x="400" y="140" />
+        <di:waypoint x="400" y="240" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0ssfupx_di" bpmnElement="ExclusiveGateway_0xe0igt" isMarkerVisible="true">
+        <dc:Bounds x="735" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="720" y="312" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_13shgy3_di" bpmnElement="Task_0lamaqe">
+        <dc:Bounds x="880" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1v58slf_di" bpmnElement="UserTask_1v58slf">
+        <dc:Bounds x="1050" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1kxyyek_di" bpmnElement="SequenceFlow_1kxyyek">
+        <di:waypoint x="785" y="280" />
+        <di:waypoint x="880" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_13wjuua_di" bpmnElement="SequenceFlow_13wjuua">
+        <di:waypoint x="980" y="280" />
+        <di:waypoint x="1050" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1ld9rqv_di" bpmnElement="SequenceFlow_1ld9rqv">
+        <di:waypoint x="980" y="280" />
+        <di:waypoint x="1020" y="280" />
+        <di:waypoint x="1020" y="420" />
+        <di:waypoint x="1050" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1s2bvsf_di" bpmnElement="Task_137lcx0">
+        <dc:Bounds x="1050" y="380" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0r8sy9o_di" bpmnElement="EndEvent_0r8sy9o">
+        <dc:Bounds x="1222" y="402" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_12qrqar_di" bpmnElement="SequenceFlow_12qrqar">
+        <di:waypoint x="1150" y="420" />
+        <di:waypoint x="1222" y="420" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0xw32me_di" bpmnElement="SequenceFlow_0xw32me">
+        <di:waypoint x="1150" y="280" />
+        <di:waypoint x="1185" y="280" />
+        <di:waypoint x="1185" y="210" />
+        <di:waypoint x="1220" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0flgbxa_di" bpmnElement="Task_0wr209c">
+        <dc:Bounds x="1220" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_18jcpw9_di" bpmnElement="SequenceFlow_18jcpw9">
+        <di:waypoint x="1320" y="210" />
+        <di:waypoint x="1390" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1golfsc_di" bpmnElement="Task_1ajlgxd">
+        <dc:Bounds x="1390" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_1c4ucmv_di" bpmnElement="ExclusiveGateway_1c4ucmv" isMarkerVisible="true">
+        <dc:Bounds x="1565" y="185" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1553" y="155" width="82" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0yylqs3_di" bpmnElement="SequenceFlow_0yylqs3">
+        <di:waypoint x="1490" y="210" />
+        <di:waypoint x="1565" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0uk0mmq_di" bpmnElement="SequenceFlow_0uk0mmq">
+        <di:waypoint x="1615" y="210" />
+        <di:waypoint x="1690" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_13hybeq_di" bpmnElement="SequenceFlow_13hybeq">
+        <di:waypoint x="1590" y="235" />
+        <di:waypoint x="1590" y="360" />
+        <di:waypoint x="1570" y="360" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0wri2n5_di" bpmnElement="SequenceFlow_0wri2n5">
+        <di:waypoint x="1470" y="360" />
+        <di:waypoint x="1440" y="360" />
+        <di:waypoint x="1440" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0ggw3e9_di" bpmnElement="Task_1sekqdc">
+        <dc:Bounds x="1690" y="170" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0jg0gdn_di" bpmnElement="EndEvent_0jg0gdn">
+        <dc:Bounds x="1872" y="192" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1uvlhaq_di" bpmnElement="SequenceFlow_1uvlhaq">
+        <di:waypoint x="1790" y="210" />
+        <di:waypoint x="1872" y="210" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_06rpxh9_di" bpmnElement="Task_0lrifl4">
+        <dc:Bounds x="1470" y="320" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn2:definitions>

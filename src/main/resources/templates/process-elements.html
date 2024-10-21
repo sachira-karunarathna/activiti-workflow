@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Process Elements</title>
+</head>
+<body>
+<h1>Flow Elements of the Process</h1>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Status</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="element : ${elements}">
+    <td th:text="${element.id}">Element ID</td>
+    <td th:text="${element.name}">Element Name</td>
+    <td th:text="${element.getClass().getSimpleName()}">Element Type</td>
+    <td th:text="${taskStatusMap[element.id]}">Status</td>
+  </tr>
+  </tbody>
+</table>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

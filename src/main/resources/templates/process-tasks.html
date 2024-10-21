@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Process Instance Tasks</title>
+</head>
+<body>
+<h1>Process Instance Tasks for ID: <span th:text="${processInstance.id}"></span></h1>
+
+<div th:if="${currentTasks.size() > 0}">
+  <h2>Current User Tasks</h2>
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Task ID</th>
+      <th>Task Name</th>
+      <th>Assignee</th>
+      <th>Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="task : ${currentTasks}">
+      <td th:text="${task.id}">Task ID</td>
+      <td th:text="${task.name}">Task Name</td>
+      <td th:text="${task.assignee != null ? task.assignee : 'Unassigned'}">Assignee</td>
+      <td>Active</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:if="${currentTasks.size() == 0}">
+  <p>No current tasks found for this process instance.</p>
+</div>
+
+<div th:if="${historicActivities.size() > 0}">
+  <h2>Historic Activities (in Order of Execution)</h2>
+  <table border="1">
+    <thead>
+    <tr>
+      <th>Activity ID</th>
+      <th>Activity Name</th>
+      <th>Activity Type</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="activity : ${historicActivities}">
+      <td th:text="${activity.id}">Activity ID</td>
+      <td th:text="${activity.activityName}">Activity Name</td>
+      <td th:text="${activity.activityType}">Activity Type</td>
+      <td th:text="${#dates.format(activity.startTime, 'yyyy-MM-dd HH:mm:ss')}">Start Time</td>
+      <td th:text="${activity.endTime != null ? #dates.format(activity.endTime, 'yyyy-MM-dd HH:mm:ss') : 'N/A'}">End Time</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div th:if="${historicActivities.size() == 0}">
+  <p>No historic activities found for this process instance.</p>
+</div>
+
+<a href="/">Back to Home</a>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome to Spring Boot</title>
+</head>
+<body>
+    <h1 th:text="'Hello, ' + ${name} + '!'">Hello, World!</h1>
+    <h1>Fill the form to start the process</h1>
+    <form action="/submit-task-form" method="post">
+        <div>
+            <label>Name: </label>
+            <input name="name" type="text" value="" />
+            <br/>
+        </div>
+        <input name="submit" type="submit" onclick=""/>
+    </form>
+</body>
+</html>

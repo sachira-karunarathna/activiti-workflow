@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" id="model-dfe698c9-26ca-4aa6-9a54-e87bf6afabe3" name="sampleprocess" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
+  <process id="Process_kHjRCI4rv" name="sampleprocess" isExecutable="true">
+    <documentation>Sample Process Doc</documentation>
+    <startEvent id="Event_1">
+      <outgoing>SequenceFlow_1yttx13</outgoing>
+    </startEvent>
+    <userTask id="UserTask_0maqu9l" name="user_task_1" activiti:formKey="form_1" activiti:assignee="admin" activiti:dueDate="2024-10-20T10:00:00" activiti:priority="2">
+      <documentation>Task Doc</documentation>
+      <incoming>SequenceFlow_1yttx13</incoming>
+      <outgoing>SequenceFlow_0s8t6t5</outgoing>
+    </userTask>
+    <sequenceFlow id="SequenceFlow_1yttx13" sourceRef="Event_1" targetRef="UserTask_0maqu9l" />
+    <serviceTask id="ServiceTask_0m78he7" name="service_task_1" implementation="serviceTaskImpl">
+      <documentation>Service Task Doc</documentation>
+      <incoming>SequenceFlow_0s8t6t5</incoming>
+      <outgoing>SequenceFlow_16w42w1</outgoing>
+    </serviceTask>
+    <sequenceFlow id="SequenceFlow_0s8t6t5" sourceRef="UserTask_0maqu9l" targetRef="ServiceTask_0m78he7" />
+    <userTask id="UserTask_0ier3bu" name="user_task_2" activiti:formKey="form_2" activiti:candidateGroups="all" activiti:dueDate="2024-10-28T12:00:00" activiti:priority="2">
+      <documentation>User task 2 should be completed by all the users.</documentation>
+      <incoming>SequenceFlow_16w42w1</incoming>
+      <outgoing>SequenceFlow_1koeh7x</outgoing>
+    </userTask>
+    <endEvent id="EndEvent_1adfdch">
+      <incoming>SequenceFlow_1koeh7x</incoming>
+    </endEvent>
+    <sequenceFlow id="SequenceFlow_1koeh7x" sourceRef="UserTask_0ier3bu" targetRef="EndEvent_1adfdch" />
+    <sequenceFlow id="SequenceFlow_16w42w1" sourceRef="ServiceTask_0m78he7" targetRef="UserTask_0ier3bu" />
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_Process_kHjRCI4rv">
+    <bpmndi:BPMNPlane id="BPMNPlane_Process_kHjRCI4rv" bpmnElement="Process_kHjRCI4rv">
+      <bpmndi:BPMNShape id="BPMNShape_Event_1" bpmnElement="Event_1">
+        <omgdc:Bounds x="412" y="240" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_UserTask_0maqu9l" bpmnElement="UserTask_0maqu9l">
+        <omgdc:Bounds x="540" y="218" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_ServiceTask_0m78he7" bpmnElement="ServiceTask_0m78he7">
+        <omgdc:Bounds x="740" y="218" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_1yttx13" bpmnElement="SequenceFlow_1yttx13">
+        <omgdi:waypoint x="448" y="258" />
+        <omgdi:waypoint x="540" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="BPMNEdge_SequenceFlow_0s8t6t5" bpmnElement="SequenceFlow_0s8t6t5">
+        <omgdi:waypoint x="640" y="258" />
+        <omgdi:waypoint x="740" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0ier3bu_di" bpmnElement="UserTask_0ier3bu">
+        <omgdc:Bounds x="920" y="218" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1adfdch_di" bpmnElement="EndEvent_1adfdch">
+        <omgdc:Bounds x="1072" y="240" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1koeh7x_di" bpmnElement="SequenceFlow_1koeh7x">
+        <omgdi:waypoint x="1020" y="258" />
+        <omgdi:waypoint x="1072" y="258" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_16w42w1_di" bpmnElement="SequenceFlow_16w42w1">
+        <omgdi:waypoint x="840" y="258" />
+        <omgdi:waypoint x="920" y="258" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
